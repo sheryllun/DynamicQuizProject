@@ -26,6 +26,7 @@ var allQuestions = [
 var score = 0;
 var i = 0;
 
+
 function displayQ () {
   var location = document.getElementById('quiz');
   var q = allQuestions[i].question;
@@ -48,6 +49,7 @@ function displayQ () {
 }
 
 function nextQ() {
+  var location = document.getElementById('quiz');
   var selectedAns = document.querySelector('#quiz input[type="radio"]:checked');
   if(selectedAns === null) {
     alert("Please pick an answer.");
@@ -55,9 +57,20 @@ function nextQ() {
   }
   else if (selectedAns.value == allQuestions[i].correctAnswer) {
     score++;
+    var wrapSpan = document.createElement("span");
+    var sayCorrect = document.createTextNode("Correct!");
+    wrapSpan.appendChild(sayCorrect);
+    location.appendChild(wrapSpan);
   }
 
-  var location = document.getElementById('quiz');
+  else {
+    var wrapSpan = document.createElement("span");
+    var sayWrong = document.createTextNode("Wrong! The correct answer is " +allQuestions[i].choices[allQuestions[i].correctAnswer]+".");
+    wrapSpan.appendChild(sayWrong);
+    location.appendChild(wrapSpan);
+  }
+
+setTimeout(function() {
   while(location.firstChild) {
     location.removeChild(location.firstChild);
   }
@@ -78,5 +91,6 @@ function nextQ() {
     elem.parentNode.removeChild(elem); 
     elem2.parentNode.removeChild(elem2);     
   }
+}, 2500);
 }
 

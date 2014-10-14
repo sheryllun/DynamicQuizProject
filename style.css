@@ -35,3 +35,9 @@ p {
 	font: 30px "Amatic SC";
 	letter-spacing: 2px;
 }
+
+span {
+	display: inline-block;
+	color: #82DCFC;
+	margin-top: 10px;
+}
