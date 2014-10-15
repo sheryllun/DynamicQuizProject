@@ -23,74 +23,72 @@ var allQuestions = [
    choices: ["Positive", "Negative", "Neutral"], correctAnswer:1}   
 ];
 
+var curQuestionIndex = 0;
 var score = 0;
-var i = 0;
 
-
-function displayQ () {
+function displayCurrentQuestion () {
   var location = document.getElementById('quiz');
-  var q = allQuestions[i].question;
+  var q = allQuestions[curQuestionIndex].question;
   var writeQ = document.createTextNode(q);
   location.appendChild(writeQ);
   location.appendChild(document.createElement("br"));
   location.appendChild(document.createElement("br"));
   
-      for(var j in allQuestions[i].choices) {
-      var a =allQuestions[i].choices[j];
+    for(var j in allQuestions[curQuestionIndex].choices) {
+      var a =allQuestions[curQuestionIndex].choices[j];
       var selectAns = document.createElement("input");
       selectAns.setAttribute("type", "radio");
       selectAns.setAttribute("value", j);
-      selectAns.setAttribute("name", i);
+      selectAns.setAttribute("name", curQuestionIndex);
       var writeA = document.createTextNode(a);
       location.appendChild(selectAns);
       location.appendChild(writeA);
       location.appendChild(document.createElement("br"));
-      } 
+    } 
 }
 
-function nextQ() {
+function handleAnswer() {
   var location = document.getElementById('quiz');
+  var wrapSpan = document.createElement("span");
   var selectedAns = document.querySelector('#quiz input[type="radio"]:checked');
   if(selectedAns === null) {
     alert("Please pick an answer.");
     return;
   }
-  else if (selectedAns.value == allQuestions[i].correctAnswer) {
+  else if (selectedAns.value == allQuestions[curQuestionIndex].correctAnswer) {
     score++;
-    var wrapSpan = document.createElement("span");
     var sayCorrect = document.createTextNode("Correct!");
+    document.getElementById("next").disabled=true;
     wrapSpan.appendChild(sayCorrect);
     location.appendChild(wrapSpan);
   }
-
   else {
-    var wrapSpan = document.createElement("span");
-    var sayWrong = document.createTextNode("Wrong! The correct answer is " +allQuestions[i].choices[allQuestions[i].correctAnswer]+".");
+    var sayWrong = document.createTextNode("Wrong! The correct answer is " +allQuestions[curQuestionIndex].choices[allQuestions[curQuestionIndex].correctAnswer]+".");
+    document.getElementById("next").disabled=true;
     wrapSpan.appendChild(sayWrong);
     location.appendChild(wrapSpan);
   }
 
-setTimeout(function() {
-  while(location.firstChild) {
-    location.removeChild(location.firstChild);
-  }
-
-  if(i < allQuestions.length-1) {
-  i++;
-  displayQ();
-  }
-  else {
-    var elem = document.getElementById('next');
-    var elem2 = document.getElementById('intro');
-    var wrapH2 = document.createElement("h2");
-    var end1 = document.createTextNode("Grade: " +Math.round((score/allQuestions.length)*100) + "%"); 
-    var end2 = document.createTextNode("You answered " + score + " out of " + allQuestions.length +" questions correctly.");
-    wrapH2.appendChild(end1);
-    location.appendChild(wrapH2);
-    location.appendChild(end2); 
-    elem.parentNode.removeChild(elem); 
-    elem2.parentNode.removeChild(elem2);     
-  }
-}, 2500);
+  setTimeout(function() {
+    location.innerHTML="";
+  
+    if(curQuestionIndex < allQuestions.length-1) {
+      curQuestionIndex++;
+      displayCurrentQuestion();
+      document.getElementById("next").disabled=false;
+    }
+    else {
+      var elem = document.getElementById('next');
+      var elem2 = document.getElementById('intro');
+      var wrapH2 = document.createElement("h2");
+      var tellGrade = document.createTextNode("Grade: " +Math.round((score/allQuestions.length)*100) + "%"); 
+      var tellScore = document.createTextNode("You answered " + score + " out of " + allQuestions.length +" questions correctly.");
+      wrapH2.appendChild(tellGrade);
+      location.appendChild(wrapH2);
+      location.appendChild(tellScore); 
+      elem.parentNode.removeChild(elem); 
+      elem2.parentNode.removeChild(elem2);     
+    }
+  }, 1500);
 }
 
