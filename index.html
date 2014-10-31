@@ -1,17 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="script.js"></script>
-<link href='http://fonts.googleapis.com/css?family=Amatic+SC' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Arvo:400,700' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href='http://fonts.googleapis.com/css?family=Amatic+SC' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Arvo:400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="style.css">
 	<title>Are you smarter than a fifth grader quiz</title>
 </head>
 <body onload="displayCurrentQuestion()">
 	<h1>Are you smarter than a fifth grader?</h1>
 	<p id="intro">Answer these questions to find out.  You'll see your score at the end.  You only get one chance so choose wisely!</p>
-	<form id="quiz"></form>
+	<form id="quiz">
+    <span id="question"></span> 
+  </form>
 	<br>
 	<button id="next" onclick="handleAnswer()">Next</button>
+  <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

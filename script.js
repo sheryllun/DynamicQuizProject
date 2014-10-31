@@ -30,16 +30,17 @@ function displayCurrentQuestion () {
   var location = document.getElementById('quiz');
   var q = allQuestions[curQuestionIndex].question;
   var writeQ = document.createTextNode(q);
+  $(location).hide().fadeIn('slow');
   location.appendChild(writeQ);
   location.appendChild(document.createElement("br"));
   location.appendChild(document.createElement("br"));
   
     for(var j in allQuestions[curQuestionIndex].choices) {
-      var a =allQuestions[curQuestionIndex].choices[j];
+      var a = allQuestions[curQuestionIndex].choices[j];
       var selectAns = document.createElement("input");
-      selectAns.setAttribute("type", "radio");
-      selectAns.setAttribute("value", j);
-      selectAns.setAttribute("name", curQuestionIndex);
+      selectAns.type="radio";
+      selectAns.value = j;
+      selectAns.name = curQuestionIndex;
       var writeA = document.createTextNode(a);
       location.appendChild(selectAns);
       location.appendChild(writeA);
@@ -84,11 +85,12 @@ function handleAnswer() {
       var tellGrade = document.createTextNode("Grade: " +Math.round((score/allQuestions.length)*100) + "%"); 
       var tellScore = document.createTextNode("You answered " + score + " out of " + allQuestions.length +" questions correctly.");
       wrapH2.appendChild(tellGrade);
+      $(location).hide().fadeIn('slow');
       location.appendChild(wrapH2);
       location.appendChild(tellScore); 
       elem.parentNode.removeChild(elem); 
-      elem2.parentNode.removeChild(elem2);     
+      elem2.parentNode.removeChild(elem2);
     }
-  }, 1500);
+  }, 1000);
 }
 
